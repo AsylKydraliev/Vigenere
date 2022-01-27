@@ -7,13 +7,23 @@
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
-        <input matInput name="password" ngModel>
+        <input matInput name="password" ngModel required>
       </mat-form-field>
       <div class="btns">
-        <button class="material-icons" type="submit" (click)="onEncoded()">
+        <button
+          class="material-icons"
+          type="submit"
+          (click)="onEncoded()"
+          [disabled]="f.invalid"
+        >
           arrow_downward
         </button>
-        <button class="material-icons" type="submit" (click)="onDecoded()">
+        <button
+          class="material-icons"
+          type="submit"
+          (click)="onDecoded()"
+          [disabled]="f.invalid"
+        >
           arrow_upward
         </button>
       </div>
