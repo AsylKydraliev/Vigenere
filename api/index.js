@@ -5,15 +5,21 @@ const port = 5000;
 
 const Vigenere = require('caesar-salad').Vigenere;
 
+app.use(express.json());
 app.use(cors({origin: 'http://localhost:4200'}));
 
 app.post('/encode', (req, res) => {
-    console.log(req.body)
-    res.send(Vigenere.Cipher(req.body.message).crypt(req.body.password))
+    const message = {
+        message: Vigenere.Cipher(req.body.password).crypt(req.body.message),
+    }
+    res.send(message);
 });
 
 app.post('/decode', (req, res) => {
-    res.send(Vigenere.Decipher(req.body.message).crypt(req.body.password));
+    const message = {
+        message: Vigenere.Decipher(req.body.password).crypt(req.body.message),
+    }
+    res.send(message);
 });
 
 app.listen(port, () => {

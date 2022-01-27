@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Message } from '../model/message.model';
 import { HttpService } from '../services/http.service';
@@ -8,12 +8,15 @@ import { HttpService } from '../services/http.service';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.sass']
 })
-export class FormComponent implements OnInit {
+export class FormComponent {
   @ViewChild('f') form!: NgForm;
 
   constructor(private httpService: HttpService) { }
 
-  ngOnInit() {
+  setFormValue(value: {[key: string]: any}){
+    setTimeout( () => {
+      this.form.form.setValue(value);
+    })
   }
 
   onEncoded() {
@@ -21,7 +24,13 @@ export class FormComponent implements OnInit {
       this.form.value.decoded,
       this.form.value.password
     )
-    this.httpService.postMessageEncode(message);
+    this.httpService.postMessageEncode(message).subscribe(message => {
+      this.setFormValue({
+        decoded: '',
+        encoded: (<Message>message).message,
+        password: this.form.value.password,
+      })
+    });
   }
 
   onDecoded() {
@@ -29,7 +38,12 @@ export class FormComponent implements OnInit {
       this.form.value.encoded,
       this.form.value.password
     )
-    console.log(message)
-    this.httpService.postMessageDecode(message);
+    this.httpService.postMessageDecode(message).subscribe(message => {
+      this.setFormValue({
+        encoded: '',
+        decoded: (<Message>message).message,
+        password: this.form.value.password,
+      })
+    });
   }
 }

@@ -8,10 +8,10 @@ export class HttpService{
   constructor(private http: HttpClient) {}
 
   postMessageEncode(message: Message) {
-    this.http.post(`http://localhost:5000/encode`, JSON.stringify(message)).subscribe();
+    return this.http.post(`http://localhost:5000/encode`,message);
   }
 
   postMessageDecode(message: Message) {
-    this.http.post(`http://localhost:5000/decode`, message).subscribe();
+    return this.http.post(`http://localhost:5000/decode`, message);
   }
 }
