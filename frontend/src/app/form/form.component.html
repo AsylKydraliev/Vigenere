@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-content>
-    <form class="form" #f="ngForm" fxLayout="column" fxLayoutAlign="space-around center">
+    <form class="form" #f="ngForm" fxLayout="column">
       <mat-form-field appearance="fill">
         <mat-label>Decoded message</mat-label>
         <textarea matInput name="decoded" ngModel></textarea>
@@ -9,7 +9,7 @@
         <mat-label>Password</mat-label>
         <input matInput name="password" ngModel>
       </mat-form-field>
-      <div>
+      <div class="btns">
         <button class="material-icons" type="submit" (click)="onEncoded()">
           arrow_downward
         </button>

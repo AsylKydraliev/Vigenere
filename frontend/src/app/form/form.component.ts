@@ -11,7 +11,7 @@ import { HttpService } from '../services/http.service';
 export class FormComponent {
   @ViewChild('f') form!: NgForm;
 
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) {}
 
   setFormValue(value: {[key: string]: any}){
     setTimeout( () => {
@@ -19,11 +19,15 @@ export class FormComponent {
     })
   }
 
-  onEncoded() {
-    const message = new Message(
-      this.form.value.decoded,
-      this.form.value.password
+  createMessage(message: string, password:string){
+    return new Message(
+      message,
+      password
     )
+  }
+
+  onEncoded() {
+    const message = this.createMessage(this.form.value.decoded, this.form.value.password);
     this.httpService.postMessageEncode(message).subscribe(message => {
       this.setFormValue({
         decoded: '',
@@ -34,10 +38,7 @@ export class FormComponent {
   }
 
   onDecoded() {
-    const message = new Message(
-      this.form.value.encoded,
-      this.form.value.password
-    )
+  const message = this.createMessage(this.form.value.encoded, this.form.value.password);
     this.httpService.postMessageDecode(message).subscribe(message => {
       this.setFormValue({
         encoded: '',
